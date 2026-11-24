@@ -3,7 +3,7 @@
   "kind": "tianshu.plugin",
   "id": "laya-bridge",
   "displayName": "Laya 虚拟环境工坊",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Laya TPI 2.0 全功能桥接插件：经宿主代跑在本地虚拟环境（laya-env）执行三问决策推理、项目扫描与成品构建，主模型按需从 .laya/artifacts 提取成品并在天枢面板可视化预览。",
   "runtime": "agent",
   "entry": "index.mjs",

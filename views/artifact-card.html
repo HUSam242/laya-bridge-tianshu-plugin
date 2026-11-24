@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="panel">
+    <article class="panel" aria-labelledby="card-title">
       <div class="header">
         <div>
-          <div class="title" id="card-title">Laya 成品</div>
+          <h1 class="title" id="card-title">Laya 成品</h1>
           <div class="subtitle" id="card-meta">等待结果…</div>
         </div>
-        <span class="pill" id="card-status">READY</span>
+        <span class="pill" id="card-status" role="status" aria-live="polite">READY</span>
       </div>
-      <div class="row" id="card-pills"></div>
-      <pre class="code-box" id="card-body"></pre>
-    </div>
+      <div class="row" id="card-pills" aria-label="关键指标"></div>
+      <pre class="code-box" id="card-body" tabindex="0"></pre>
+    </article>
 
     <script type="module" src="./artifact-card.js"></script>
   </body>

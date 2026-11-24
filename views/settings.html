@@ -7,26 +7,28 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="panel">
-      <h1 class="title">Laya 本地虚拟环境配置</h1>
+    <main class="panel" aria-labelledby="settings-title">
+      <h1 class="title" id="settings-title">Laya 本地虚拟环境配置</h1>
       <p class="subtitle">保存在插件独立数据目录，不包含任何模型密钥。修改后下次工具调用立即生效。</p>
+
+      <div id="config-error" class="alert-banner" role="alert" hidden></div>
 
       <div class="field">
         <label for="input-python">Python 虚拟环境解释器路径（pythonPath）</label>
-        <input id="input-python" type="text" placeholder="D:/laya-env/Scripts/python.exe" />
-        <div class="hint">指向本地 laya-env 的 python 可执行文件（禁止包含 Shell 元字符）。</div>
+        <input id="input-python" type="text" aria-describedby="hint-python" placeholder="例如：D:/laya-env/Scripts/python.exe" />
+        <div class="hint" id="hint-python">仅允许字母、数字、`. _ / -` 及盘符前缀，禁止空白、`%`、`^`、`~` 及 Shell 元字符。</div>
       </div>
 
       <div class="field">
         <label for="input-worker">成品工坊脚本路径（workerScript）</label>
-        <input id="input-worker" type="text" placeholder="D:/laya-work/dsh-guard/optimizer/laya_artifact_worker.py" />
-        <div class="hint">指向本地 laya_artifact_worker.py。</div>
+        <input id="input-worker" type="text" aria-describedby="hint-worker" placeholder="例如：D:/laya-work/dsh-guard/optimizer/laya_artifact_worker.py" />
+        <div class="hint" id="hint-worker">指向本机 laya_artifact_worker.py 脚本路径。</div>
       </div>
 
       <div class="field">
         <label for="input-daemon">Laya 8767 热态守护进程地址（daemonUrl）</label>
-        <input id="input-daemon" type="text" placeholder="http://127.0.0.1:8767" />
-        <div class="hint">仅由外部 laya-env 访问，插件隔离进程本身不联网。</div>
+        <input id="input-daemon" type="text" aria-describedby="hint-daemon" placeholder="http://127.0.0.1:8767" />
+        <div class="hint" id="hint-daemon">仅允许本机回环地址 http://127.0.0.1:&lt;port&gt; 或 http://localhost:&lt;port&gt;（1024..65535）。</div>
       </div>
 
       <div class="field">
@@ -36,10 +38,10 @@
 
       <div class="row">
         <button type="button" id="btn-save" class="btn btn-primary">保存配置</button>
-        <button type="button" id="btn-reset" class="btn">恢复默认</button>
-        <span class="subtitle" id="save-status"></span>
+        <button type="button" id="btn-reset" class="btn" aria-pressed="false">恢复默认</button>
+        <span class="subtitle" id="save-status" role="status" aria-live="polite"></span>
       </div>
-    </div>
+    </main>
 
     <script type="module" src="./settings.js"></script>
   </body>

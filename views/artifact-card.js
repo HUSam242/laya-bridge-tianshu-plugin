@@ -1,7 +1,10 @@
-function notifyResize() {
-  const height = Math.min(4000, Math.max(120, document.body.scrollHeight + 12))
-  parent.postMessage({ tpi: 'view', type: 'resize', height }, '*')
-}
+import { createTpiBridge } from './tpi-bridge.js'
+
+const bridge = createTpiBridge({
+  onHello(context) {
+    renderToolContext(context)
+  },
+})
 
 function addPill(container, text, variant = '') {
   const span = document.createElement('span')
@@ -36,7 +39,7 @@ function renderToolContext(context) {
     titleEl.textContent = `Laya · ${tool}`
     metaEl.textContent = context?.truncated ? '结果已截断（点击展开原始输出）' : '原始文本结果'
     bodyEl.textContent = rawResult
-    notifyResize()
+    bridge.notifyResize(120)
     return
   }
 
@@ -46,6 +49,7 @@ function renderToolContext(context) {
   if (parsed.total_latency_ms !== undefined) addPill(pillsEl, `${parsed.total_latency_ms} ms`)
   if (parsed.meta?.latency_ms !== undefined) addPill(pillsEl, `${parsed.meta.latency_ms} ms`)
   if (parsed.mode) addPill(pillsEl, parsed.mode, 'ok')
+  if (parsed.truncated) addPill(pillsEl, '已截断', 'warn')
   if (parsed.execution_plan) {
     addPill(pillsEl, `可并行 ${parsed.execution_plan.parallel_batch?.length ?? 0}`, 'ok')
     addPill(pillsEl, `串行 ${parsed.execution_plan.serial_queue?.length ?? 0}`, 'warn')
@@ -65,16 +69,7 @@ function renderToolContext(context) {
     bodyEl.textContent = JSON.stringify(parsed, null, 2)
   }
 
-  notifyResize()
+  bridge.notifyResize(120)
 }
 
-window.addEventListener('message', event => {
-  const data = event.data
-  if (!data || data.tpi !== 'host') return
-  if (data.type === 'hello') {
-    renderToolContext(data.context)
-  }
-})
-
-parent.postMessage({ tpi: 'view', type: 'ready' }, '*')
-notifyResize()
+bridge.ready(120)
