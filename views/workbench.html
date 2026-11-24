@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Laya 虚拟环境工坊</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div>
+        <h1 class="title">Laya 虚拟环境工坊</h1>
+        <p class="subtitle">虚拟环境出成品（laya-env） · 主模型零噪声取货（.laya/artifacts）</p>
+      </div>
+      <button type="button" id="btn-refresh" class="btn">刷新成品</button>
+    </div>
+
+    <div class="grid">
+      <div class="stat">
+        <div class="stat-label">就绪成品</div>
+        <div class="stat-val" id="stat-artifacts">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">会话步数</div>
+        <div class="stat-val" id="stat-calls">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">连续重复命令</div>
+        <div class="stat-val" id="stat-dup">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">预览空转连击</div>
+        <div class="stat-val" id="stat-preview">0</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">成品仓库（.laya/artifacts）</div>
+      <div id="artifact-list" class="list">
+        <div class="empty">加载中…</div>
+      </div>
+    </div>
+
+    <div class="panel" id="detail-panel" hidden>
+      <div class="header">
+        <div>
+          <div class="panel-title" id="detail-title">成品内容</div>
+        </div>
+        <div class="row" id="file-tabs"></div>
+      </div>
+      <pre class="code-box" id="detail-body"></pre>
+    </div>
+
+    <script type="module" src="./workbench.js"></script>
+  </body>
+</html>

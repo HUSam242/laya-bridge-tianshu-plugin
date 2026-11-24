@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Laya 环境配置</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="panel">
+      <h1 class="title">Laya 本地虚拟环境配置</h1>
+      <p class="subtitle">保存在插件独立数据目录，不包含任何模型密钥。修改后下次工具调用立即生效。</p>
+
+      <div class="field">
+        <label for="input-python">Python 虚拟环境解释器路径（pythonPath）</label>
+        <input id="input-python" type="text" placeholder="D:/laya-env/Scripts/python.exe" />
+        <div class="hint">指向本地 laya-env 的 python 可执行文件（禁止包含 Shell 元字符）。</div>
+      </div>
+
+      <div class="field">
+        <label for="input-worker">成品工坊脚本路径（workerScript）</label>
+        <input id="input-worker" type="text" placeholder="D:/laya-work/dsh-guard/optimizer/laya_artifact_worker.py" />
+        <div class="hint">指向本地 laya_artifact_worker.py。</div>
+      </div>
+
+      <div class="field">
+        <label for="input-daemon">Laya 8767 热态守护进程地址（daemonUrl）</label>
+        <input id="input-daemon" type="text" placeholder="http://127.0.0.1:8767" />
+        <div class="hint">仅由外部 laya-env 访问，插件隔离进程本身不联网。</div>
+      </div>
+
+      <div class="field">
+        <label for="input-timeout">默认任务超时（毫秒，10000..600000）</label>
+        <input id="input-timeout" type="number" min="10000" max="600000" step="1000" />
+      </div>
+
+      <div class="row">
+        <button type="button" id="btn-save" class="btn btn-primary">保存配置</button>
+        <button type="button" id="btn-reset" class="btn">恢复默认</button>
+        <span class="subtitle" id="save-status"></span>
+      </div>
+    </div>
+
+    <script type="module" src="./settings.js"></script>
+  </body>
+</html>

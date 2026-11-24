@@ -1,0 +1,125 @@
+{
+  "$tpi": "2.0",
+  "kind": "tianshu.plugin",
+  "id": "laya-bridge",
+  "displayName": "Laya 虚拟环境工坊",
+  "version": "2.0.0",
+  "description": "Laya TPI 2.0 全功能桥接插件：经宿主代跑在本地虚拟环境（laya-env）执行三问决策推理、项目扫描与成品构建，主模型按需从 .laya/artifacts 提取成品并在天枢面板可视化预览。",
+  "runtime": "agent",
+  "entry": "index.mjs",
+  "engines": {
+    "tianshu": ">=4.0.5 <5.0.0"
+  },
+  "capabilities": [
+    "tools",
+    "storage",
+    "workspace",
+    "shell",
+    "promptContext",
+    "ui",
+    "notifications",
+    "log"
+  ],
+  "permissions": {
+    "workspace": {
+      "read": true
+    },
+    "shell": {
+      "run": true
+    }
+  },
+  "contributes": {
+    "tools": [
+      {
+        "name": "laya_venv_probe",
+        "description": "探测本地 laya-env 虚拟环境、PyTorch、权重目录与 8767 热态守护进程状态，不修改项目文件。"
+      },
+      {
+        "name": "laya_venv_decide",
+        "description": "在本地 laya-env 中运行 Laya 三问决策（fast_path/parallel_safe/route，支持单条或批量命令），产出并发分组与路由成品。"
+      },
+      {
+        "name": "laya_venv_produce",
+        "description": "派活给本地 laya-env 虚拟环境产出成品（workspace_digest 项目简报 / html_audit 静态质检 / py_script 虚拟环境脚本），写入 .laya/artifacts 并返回精简摘要。"
+      },
+      {
+        "name": "laya_fetch_artifact",
+        "description": "只读列出或提取 .laya/artifacts 中 Laya 已产出的成品清单、manifest、summary 或指定产物正文供主模型直接使用。"
+      }
+    ],
+    "lifecycle": [
+      "turnStart",
+      "toolEnd",
+      "sessionEnd"
+    ],
+    "ui": {
+      "views": [
+        {
+          "id": "workbench",
+          "title": "Laya 工坊",
+          "entry": "views/workbench.html"
+        },
+        {
+          "id": "artifact-card",
+          "title": "Laya 成品卡",
+          "entry": "views/artifact-card.html"
+        },
+        {
+          "id": "settings",
+          "title": "Laya 环境配置",
+          "entry": "views/settings.html"
+        }
+      ],
+      "navigation": [
+        {
+          "view": "workbench",
+          "label": "Laya 工坊",
+          "icon": "assets/laya-icon.svg"
+        }
+      ],
+      "panels": [
+        {
+          "view": "workbench",
+          "label": "Laya 成品"
+        }
+      ],
+      "settings": [
+        {
+          "view": "settings",
+          "label": "Laya 虚拟环境"
+        }
+      ],
+      "commands": [
+        {
+          "id": "open-workbench",
+          "title": "打开 Laya 虚拟环境工坊",
+          "view": "workbench"
+        },
+        {
+          "id": "refresh-artifacts",
+          "title": "刷新 Laya 成品索引"
+        }
+      ],
+      "toolRenderers": [
+        {
+          "tool": "laya_venv_decide",
+          "view": "artifact-card"
+        },
+        {
+          "tool": "laya_venv_produce",
+          "view": "artifact-card"
+        },
+        {
+          "tool": "laya_fetch_artifact",
+          "view": "artifact-card"
+        }
+      ],
+      "statusItems": [
+        {
+          "id": "laya-status",
+          "view": "workbench"
+        }
+      ]
+    }
+  }
+}
